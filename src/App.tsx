@@ -1,28 +1,44 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from "react";
+import { useState } from "react";
+import { connect } from "react-redux";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+import TaskList from "./components/TaskList";
+import { addTask, updateTask } from "./reducers/TaskListReducer";
+
+interface Props {
+  tasks: TaskListState;
+  addTask: Function;
+  updateTask: Function;
 }
 
-export default App;
+const App = ({ tasks, addTask, updateTask }: Props) => {
+  const [newTaskInput, setNewTaskInput] = useState("");
+
+  return (
+    <div className="app">
+      <TaskList tasks={tasks} onUpdate={(task: Task) => updateTask(task)} />
+
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          addTask(newTaskInput);
+          setNewTaskInput("");
+        }}
+      >
+        <input
+          type="text"
+          value={newTaskInput}
+          onChange={e => setNewTaskInput(e.target.value)}
+        />
+        <button type="submit">Add</button>
+      </form>
+    </div>
+  );
+};
+
+const mapStateToProps = ({ tasks }: RootState) => ({ tasks });
+
+export default connect(
+  mapStateToProps,
+  { addTask, updateTask }
+)(App);
