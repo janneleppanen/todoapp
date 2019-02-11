@@ -7,3 +7,9 @@ const rootReducer = combineReducers({
 } as any);
 
 export default rootReducer;
+
+function helloWorld(i: any) {
+  return i;
+}
+
+helloWorld("ok");

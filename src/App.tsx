@@ -7,8 +7,8 @@ import { addTask, updateTask } from "./reducers/TaskListReducer";
 
 interface Props {
   tasks: TaskListState;
-  addTask: Function;
-  updateTask: Function;
+  addTask: typeof addTask;
+  updateTask: typeof updateTask;
 }
 
 const App = ({ tasks, addTask, updateTask }: Props) => {

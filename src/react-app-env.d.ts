@@ -18,3 +18,8 @@ interface Action {
 }
 
 type Reducer<S, A extends AnyAction> = (state: S | undefined, action: A) => S;
+
+type BaseAction = {
+  type: string;
+  payload?: uknown;
+};
