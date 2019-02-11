@@ -3,25 +3,26 @@ import { useState } from "react";
 import { connect } from "react-redux";
 
 import TaskList from "./components/TaskList";
-import { addTask, updateTask } from "./reducers/TaskListReducer";
+import { addTask, updateTask, deleteTask } from "./reducers/TaskListReducer";
 
 interface Props {
   tasks: TaskListState;
   addTask: typeof addTask;
   updateTask: typeof updateTask;
+  deleteTask: typeof deleteTask;
 }
 
-const App = ({ tasks, addTask, updateTask }: Props) => {
+const App = ({ tasks, addTask, updateTask, deleteTask }: Props) => {
   const [newTaskInput, setNewTaskInput] = useState("");
 
   return (
     <div className="app">
-      <TaskList tasks={tasks} onUpdate={(task: Task) => updateTask(task)} />
+      <TaskList tasks={tasks} onUpdate={updateTask} onDelete={deleteTask} />
 
       <form
         onSubmit={e => {
           e.preventDefault();
-          addTask(newTaskInput);
+          newTaskInput && addTask(newTaskInput);
           setNewTaskInput("");
         }}
       >
@@ -40,5 +41,5 @@ const mapStateToProps = ({ tasks }: RootState) => ({ tasks });
 
 export default connect(
   mapStateToProps,
-  { addTask, updateTask }
+  { addTask, updateTask, deleteTask }
 )(App);

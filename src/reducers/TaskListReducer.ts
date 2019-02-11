@@ -1,7 +1,6 @@
-import { handleActions } from "../utils/redux-helpers";
-
 export const ADD_TASK = "ADD_TASK";
 export const UPDATE_TASK = "UPDATE_TASK";
+export const DELETE_TASK = "DELETE_TASK";
 
 const INITIAL_STATE: TaskListState = [
   { id: 1, text: "Eat bananas", done: false },
@@ -20,19 +19,28 @@ export const updateTask = (task: Task) => ({
   payload: task
 });
 
+export const deleteTask = (task: Task) => ({
+  type: DELETE_TASK,
+  payload: task
+});
+
 type Action = BaseAction;
 
 const TaskListReducer = (state = INITIAL_STATE, action: Action) => {
-  switch (action.type) {
+  const { payload, type } = action;
+
+  switch (type) {
     case ADD_TASK:
-      return [...state, action.payload];
+      return [...state, payload];
     case UPDATE_TASK:
       return state.map(task => {
-        if (task.id === action.payload.id) {
-          return action.payload;
+        if (task.id === payload.id) {
+          return payload;
         }
         return task;
       });
+    case DELETE_TASK:
+      return state.filter(task => task.id !== payload.id);
     default:
       return state;
   }

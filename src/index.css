@@ -14,8 +14,9 @@ body {
 
 .app {
   font-family: sans-serif;
-  background: whitesmoke;
   padding: 1rem;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .list {
@@ -26,6 +27,7 @@ body {
 
 .list-item {
   padding: 0.5rem;
+  display: flex;
 }
 
 form {
@@ -64,6 +66,7 @@ input[type="checkbox"] {
 .task-name-input[type="text"] {
   border-bottom: 1px solid transparent;
   border-radius: 0;
+  flex: 1;
   background: none;
   box-shadow: none;
 }
@@ -71,4 +74,25 @@ input[type="checkbox"] {
 .task-name-input:focus {
   border-bottom: 1px solid #ccc;
   outline: none;
+}
+
+.move-me {
+  width: 2rem;
+  height: 2rem;
+  background: #09f;
+  border-radius: 1rem;
+}
+
+.btn--delete {
+  transition: all 0.2s;
+  background: transparent;
+  color: #aaa;
+  font-size: 1.5rem;
+  line-height: 1;
+  padding: 0.2rem;
+  outline: none;
+}
+
+.btn--delete:hover {
+  color: #09f;
 }
