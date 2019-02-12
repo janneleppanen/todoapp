@@ -6,19 +6,42 @@ import TaskList from "./components/TaskList";
 import { addTask, updateTask, deleteTask } from "./reducers/TaskListReducer";
 
 interface Props {
-  tasks: TaskListState;
+  tasks: Array<Task>;
+  tasksDone: Array<Task>;
   addTask: typeof addTask;
   updateTask: typeof updateTask;
   deleteTask: typeof deleteTask;
 }
 
-const App = ({ tasks, addTask, updateTask, deleteTask }: Props) => {
+const App = ({ tasks, tasksDone, addTask, updateTask, deleteTask }: Props) => {
   const [newTaskInput, setNewTaskInput] = useState("");
+  const [showArchive, setArchiveVisibility] = useState(false);
 
   return (
     <div className="app">
       <TaskList tasks={tasks} onUpdate={updateTask} onDelete={deleteTask} />
 
+      {!showArchive && (
+        <button
+          className="btn--text"
+          onClick={e => {
+            setArchiveVisibility(true);
+          }}
+        >
+          Show archived tasks
+        </button>
+      )}
+
+      {showArchive && (
+        <>
+          <hr />
+          <TaskList
+            tasks={tasksDone}
+            onUpdate={updateTask}
+            onDelete={deleteTask}
+          />
+        </>
+      )}
       <form
         onSubmit={e => {
           e.preventDefault();
@@ -37,7 +60,12 @@ const App = ({ tasks, addTask, updateTask, deleteTask }: Props) => {
   );
 };
 
-const mapStateToProps = ({ tasks }: RootState) => ({ tasks });
+const mapStateToProps = ({ tasks }: RootState) => {
+  return {
+    tasks: tasks.filter(task => !task.done),
+    tasksDone: tasks.filter(task => task.done)
+  };
+};
 
 export default connect(
   mapStateToProps,

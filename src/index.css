@@ -16,7 +16,7 @@ body {
   font-family: sans-serif;
   padding: 1rem;
   max-width: 600px;
-  margin: 0 auto;
+  margin: 0 auto 65px auto;
 }
 
 .list {
@@ -95,4 +95,23 @@ input[type="checkbox"] {
 
 .btn--delete:hover {
   color: #09f;
+}
+
+.btn--text {
+  transition: all 0.2s;
+  background: none;
+  color: #333;
+  padding: 0.25rem 0.75rem;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+.btn--text:hover {
+  color: #09f;
+  border-bottom: 1px solid #09f;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #ccc;
 }
