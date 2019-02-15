@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 import TaskList from "./components/TaskList";
 import { addTask, updateTask, deleteTask } from "./reducers/TaskListReducer";
+import TaskListItem from "./components/TaskListItem";
 
 interface Props {
   tasks: Array<Task>;
@@ -19,7 +20,15 @@ const App = ({ tasks, tasksDone, addTask, updateTask, deleteTask }: Props) => {
 
   return (
     <div className="app">
-      <TaskList tasks={tasks} onUpdate={updateTask} onDelete={deleteTask} />
+      <TaskList>
+        {tasks.map(task => (
+          <TaskListItem
+            task={task}
+            onUpdate={updateTask}
+            onDelete={deleteTask}
+          />
+        ))}
+      </TaskList>
 
       {!showArchive && (
         <button
@@ -35,11 +44,15 @@ const App = ({ tasks, tasksDone, addTask, updateTask, deleteTask }: Props) => {
       {showArchive && (
         <>
           <hr />
-          <TaskList
-            tasks={tasksDone}
-            onUpdate={updateTask}
-            onDelete={deleteTask}
-          />
+          <TaskList>
+            {tasksDone.map(task => (
+              <TaskListItem
+                task={task}
+                onUpdate={updateTask}
+                onDelete={deleteTask}
+              />
+            ))}
+          </TaskList>
         </>
       )}
       <form
